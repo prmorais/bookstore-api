@@ -1,12 +1,19 @@
 package com.paulo.bookstore.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
+@Entity
 public class Livro implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String titulo;
     private String nome_autor;
     private String texto;
+
+    @ManyToOne(targetEntity = Categoria.class)
 
     private Categoria categoria;
 
@@ -64,20 +71,13 @@ public class Livro implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-
         if (o == null || getClass() != o.getClass()) return false;
-
         Livro livro = (Livro) o;
-
-        return new org.apache.commons.lang.builder.EqualsBuilder()
-                .append(id, livro.id)
-                .isEquals();
+        return id.equals(livro.id);
     }
 
     @Override
     public int hashCode() {
-        return new org.apache.commons.lang.builder.HashCodeBuilder(17, 37)
-                .append(id)
-                .toHashCode();
+        return Objects.hash(id);
     }
 }
