@@ -11,11 +11,16 @@ import org.springframework.context.annotation.Profile;
 @Profile("dev")
 public class DevConfig {
 
+    private final DBService dbService;
+
     @Autowired
-    private DBService dbService;
+    public DevConfig(DBService dbService) {
+        this.dbService = dbService;
+    }
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String strategy;
+
 
     @Bean
     public boolean instanciaBaseDeDados() {

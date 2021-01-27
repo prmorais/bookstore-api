@@ -12,11 +12,15 @@ import static java.util.Arrays.asList;
 @Service
 public class DBService {
 
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+    private final CategoriaRepository categoriaRepository;
+
+    private final LivroRepository livroRepository;
 
     @Autowired
-    private LivroRepository livroRepository;
+    public DBService(CategoriaRepository categoriaRepository, LivroRepository livroRepository) {
+        this.categoriaRepository = categoriaRepository;
+        this.livroRepository = livroRepository;
+    }
 
     public void instanciaBaseDeDados() {
         Categoria cat1 = new Categoria(null, "Informática", "Livro de T.I.");
