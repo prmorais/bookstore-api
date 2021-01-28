@@ -3,8 +3,10 @@ package com.paulo.bookstore.service;
 import com.paulo.bookstore.domain.Categoria;
 import com.paulo.bookstore.dtos.CategoriaDTO;
 import com.paulo.bookstore.repositories.CategoriaRepository;
+import com.paulo.bookstore.service.exception.IntegrityViolationException;
 import com.paulo.bookstore.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,6 +46,10 @@ public class CategoriaService {
 
     public void delete(Integer id) {
         findById(id);
-        categoriaRepository.deleteById(id);
+        try {
+            categoriaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new IntegrityViolationException("Categoria não pode removida! Há Livros associados.");
+        }
     }
 }
