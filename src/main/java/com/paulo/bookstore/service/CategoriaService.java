@@ -5,7 +5,6 @@ import com.paulo.bookstore.dtos.CategoriaDTO;
 import com.paulo.bookstore.repositories.CategoriaRepository;
 import com.paulo.bookstore.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,5 +40,10 @@ public class CategoriaService {
         obj.setNome(objDto.getNome());
         obj.setDescricao(objDto.getDescricao());
         return categoriaRepository.save(obj);
+    }
+
+    public void delete(Integer id) {
+        findById(id);
+        categoriaRepository.deleteById(id);
     }
 }
