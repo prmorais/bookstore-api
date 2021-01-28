@@ -29,10 +29,19 @@ public class LivroResource {
         return ResponseEntity.ok().body(obj);
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<LivroDTO>> findAll() {
+//        List<Livro> list = livroService.findAll();
+//        List<LivroDTO> listDTO = list.stream().map(LivroDTO::new).collect(Collectors.toList());
+//        return ResponseEntity.ok(listDTO);
+//    }
+
     @GetMapping
-    public ResponseEntity<List<LivroDTO>> findAll() {
-        List<Livro> list = livroService.findAll();
-        List<LivroDTO> listDTO = list.stream().map(obj -> new LivroDTO(obj)).collect(Collectors.toList());
+    public ResponseEntity<List<LivroDTO>> findAllByCategoria(
+        @RequestParam(value = "categoria", defaultValue = "0") Integer id_cat
+    ) {
+        List<Livro> list = livroService.findAllByCategoria(id_cat);
+        List<LivroDTO> listDTO = list.stream().map(LivroDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(listDTO);
     }
 

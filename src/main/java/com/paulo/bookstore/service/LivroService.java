@@ -1,7 +1,9 @@
 package com.paulo.bookstore.service;
 
+import com.paulo.bookstore.domain.Categoria;
 import com.paulo.bookstore.domain.Livro;
 import com.paulo.bookstore.dtos.LivroDTO;
+import com.paulo.bookstore.repositories.CategoriaRepository;
 import com.paulo.bookstore.repositories.LivroRepository;
 import com.paulo.bookstore.service.exception.IntegrityViolationException;
 import com.paulo.bookstore.service.exception.ObjectNotFoundException;
@@ -16,10 +18,12 @@ import java.util.Optional;
 public class LivroService {
 
     private final LivroRepository livroRepository;
+    private final CategoriaService categoriaService;
 
     @Autowired
-    public LivroService(LivroRepository livroRepository) {
+    public LivroService(LivroRepository livroRepository, CategoriaService categoriaService) {
         this.livroRepository = livroRepository;
+        this.categoriaService = categoriaService;
     }
 
     public Livro findById(Integer id) {
@@ -32,6 +36,11 @@ public class LivroService {
         return livroRepository.findAll();
     }
 
+    public List<Livro> findAllByCategoria(Integer id_cat) {
+        categoriaService.findById(id_cat);
+        return livroRepository.findAllByCategoria(id_cat);
+    }
+
     public Livro create(Livro obj) {
         obj.setId(null);
         return livroRepository.save(obj);
@@ -39,9 +48,8 @@ public class LivroService {
 
     public Livro update(Integer id, LivroDTO objDto) {
         Livro obj = findById(id);
-        obj.setNome_autor(objDto.getNome_autor());
-        obj.setTexto(objDto.getTexto());
         obj.setTitulo(objDto.getTitulo());
+        obj.setNome_autor(objDto.getNome_autor());
         return livroRepository.save(obj);
     }
 
