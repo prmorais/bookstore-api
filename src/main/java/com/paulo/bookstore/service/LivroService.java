@@ -62,10 +62,6 @@ public class LivroService {
 
     public void delete(Integer id) {
         findById(id);
-        try {
-            livroRepository.deleteById(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new IntegrityViolationException("O Livro não pode ser removido pois está associado a uma Categoria.");
-        }
+        livroRepository.deleteById(id);
     }
 }
