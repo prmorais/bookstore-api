@@ -46,11 +46,16 @@ public class LivroService {
         return livroRepository.save(obj);
     }
 
-    public Livro update(Integer id, LivroDTO objDto) {
-        Livro obj = findById(id);
-        obj.setTitulo(objDto.getTitulo());
-        obj.setNome_autor(objDto.getNome_autor());
-        return livroRepository.save(obj);
+    public Livro update(Integer id, Livro obj) {
+        Livro newObj = findById(id);
+        updateData(newObj, obj);
+        return livroRepository.save(newObj);
+    }
+
+    private void updateData(Livro newObj, Livro obj) {
+        newObj.setTitulo(obj.getTitulo());
+        newObj.setNome_autor(obj.getNome_autor());
+        newObj.setTexto(obj.getTexto());
     }
 
     public void delete(Integer id) {

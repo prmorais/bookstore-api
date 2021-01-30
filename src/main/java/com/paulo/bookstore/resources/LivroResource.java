@@ -35,7 +35,7 @@ public class LivroResource {
 //        List<LivroDTO> listDTO = list.stream().map(LivroDTO::new).collect(Collectors.toList());
 //        return ResponseEntity.ok(listDTO);
 //    }
-
+gi
     @GetMapping
     public ResponseEntity<List<LivroDTO>> findAllByCategoria(
         @RequestParam(value = "categoria", defaultValue = "0") Integer id_cat
@@ -57,9 +57,9 @@ public class LivroResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<LivroDTO> update(@PathVariable Integer id, @RequestBody LivroDTO objDto) {
-        Livro newObj = livroService.update(id, objDto);
-        return ResponseEntity.ok(new LivroDTO(newObj));
+    public ResponseEntity<Livro> update(@PathVariable Integer id, @RequestBody Livro obj) {
+        Livro newObj = livroService.update(id, obj);
+        return ResponseEntity.ok(newObj);
     }
 
     @DeleteMapping(value = "/{id}")
