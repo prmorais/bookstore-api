@@ -22,15 +22,15 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(IntegrityViolationException.class)
-    public ResponseEntity<StandardError> integrityViolationException
-        (IntegrityViolationException e, ServletRequest req) {
+    public ResponseEntity<StandardError> integrityViolationException(IntegrityViolationException e,
+                                                                     ServletRequest req) {
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
             e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StandardError> ValidationError(MethodArgumentNotValidException e, ServletRequest req) {
+    public ResponseEntity<StandardError> validationError(MethodArgumentNotValidException e, ServletRequest req) {
         ValidationError error = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
             "Erro na validação dos campos");
 
