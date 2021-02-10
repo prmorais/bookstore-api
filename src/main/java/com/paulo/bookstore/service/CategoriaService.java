@@ -2,11 +2,13 @@ package com.paulo.bookstore.service;
 
 import com.paulo.bookstore.domain.Categoria;
 import com.paulo.bookstore.dtos.CategoriaDTO;
+import com.paulo.bookstore.dtos.CategoriaNomeDTO;
 import com.paulo.bookstore.repositories.CategoriaRepository;
 import com.paulo.bookstore.service.exception.IntegrityViolationException;
 import com.paulo.bookstore.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,10 @@ public class CategoriaService {
         Optional<Categoria> obj = categoriaRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
             "Objeto não encontrado para o ID " + id + ", Tipo " + Categoria.class.getName()));
+    }
+
+    public String findNomeCategoria(Integer id_cat) {
+        return categoriaRepository.findNameCategoria(id_cat);
     }
 
     public List<Categoria> findAll() {

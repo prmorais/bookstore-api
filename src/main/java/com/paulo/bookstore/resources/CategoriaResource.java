@@ -2,6 +2,7 @@ package com.paulo.bookstore.resources;
 
 import com.paulo.bookstore.domain.Categoria;
 import com.paulo.bookstore.dtos.CategoriaDTO;
+import com.paulo.bookstore.dtos.CategoriaNomeDTO;
 import com.paulo.bookstore.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,20 @@ public class CategoriaResource {
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping(value = "/nome/{id_cat}")
+    public ResponseEntity<CategoriaNomeDTO> findNomeCategoria(
+            @PathVariable(name = "id_cat") Integer id_cat
+    ) {
+        String nome = categoriaService.findNomeCategoria(id_cat);
+        CategoriaNomeDTO categoriaNomeDTO = new CategoriaNomeDTO(nome);
+        return ResponseEntity.ok(categoriaNomeDTO);
+    }
+
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAll() {
         List<Categoria> list = categoriaService.findAll();
-        List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        /// List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        List<CategoriaDTO> listDTO = list.stream().map(CategoriaDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(listDTO);
     }
 
